@@ -29,7 +29,9 @@ jobs:
         run: dbt deps
 
       - name: Validate dbt project
-        run: dbt debug
+        working-directory: ./projeto_prod
+        run: dbt debug --profiles-dir .
 
       - name: Build dbt project
-        run: dbt build
+        working-directory: ./projeto_prod
+        run: dbt build --profiles-dir .
