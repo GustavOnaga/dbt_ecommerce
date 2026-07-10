@@ -11,9 +11,11 @@ jobs:
     environment: venv
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
@@ -22,14 +24,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install dbt packages
-        working-directory: ./projeto_prod
-        run: dbt deps
-
       - name: Create Service Account file
         working-directory: ./projeto_prod
         run: |
           echo '${{ secrets.GCP_SERVICE_ACCOUNT }}' > service-account.json
+
+      - name: Install dbt packages
+        working-directory: ./projeto_prod
+        run: dbt deps
 
       - name: Validate dbt project
         working-directory: ./projeto_prod
@@ -55,11 +57,13 @@ jobs:
           GCP_DEV_KEYFILE_PATH: service-account.json
         run: dbt docs generate --profiles-dir .
 
-      - name: Upload dbt documentation
-        uses: actions/upload-artifact@v4
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: dbt-docs
-          path: projeto_prod/target
+          path: ./projeto_prod/target
 
   deploy:
     needs: build
@@ -72,3 +76,9 @@ jobs:
 
     environment:
       name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
