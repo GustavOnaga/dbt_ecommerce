@@ -60,3 +60,15 @@ jobs:
         with:
           name: dbt-docs
           path: projeto_prod/target
+
+deploy:
+  needs: build
+
+  runs-on: ubuntu-latest
+
+  permissions:
+    pages: write
+    id-token: write
+
+  environment:
+    name: github-pages
