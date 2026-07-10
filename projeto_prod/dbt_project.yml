@@ -15,7 +15,7 @@ clean-targets:
   - "dbt_packages"
 
 models:
-  projeto_um:
+  projeto_prod:
     staging:
       +schema: stg
       +materialized: table
@@ -27,11 +27,11 @@ models:
       +tags: ['intermediate']
 
     marts:
-      +schema: marts
+      +schema: mart
       +materialized: table
       +tags: ['marts']
 
 seeds:
-  projeto_um:
+  projeto_prod:
     +schema: seeds
     +tags: ['seeds']
