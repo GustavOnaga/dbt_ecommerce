@@ -22,16 +22,22 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-          # Próximo passo: autenticação no GCP
-
       - name: Install dbt packages
-        working-directory: ./projeto_prod
+        working-directory: ./projeto_prod  
         run: dbt deps
 
       - name: Validate dbt project
         working-directory: ./projeto_prod
+        env:
+          GCP_DEV_PROJECT: ${{ vars.GCP_DEV_PROJECT }}
+          DBT_DEV_SCHEMA: ${{ vars.DBT_DEV_SCHEMA }}
+          GCP_DEV_KEYFILE_PATH: ${{ vars.GCP_DEV_KEYFILE_PATH }}
         run: dbt debug --profiles-dir .
 
       - name: Build dbt project
         working-directory: ./projeto_prod
+        env:
+          GCP_DEV_PROJECT: ${{ vars.GCP_DEV_PROJECT }}
+          DBT_DEV_SCHEMA: ${{ vars.DBT_DEV_SCHEMA }}
+          GCP_DEV_KEYFILE_PATH: ${{ vars.GCP_DEV_KEYFILE_PATH }}
         run: dbt build --profiles-dir .
