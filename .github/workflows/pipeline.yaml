@@ -25,7 +25,7 @@ jobs:
           # Próximo passo: autenticação no GCP
 
       - name: Install dbt packages
-        working-directory: ./dbt_prod
+        working-directory: ./projeto_prod
         run: dbt deps
 
       - name: Validate dbt project
