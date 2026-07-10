@@ -46,3 +46,17 @@ jobs:
           DBT_DEV_SCHEMA: ${{ secrets.DBT_DEV_SCHEMA }}
           GCP_DEV_KEYFILE_PATH: service-account.json
         run: dbt build --profiles-dir .
+
+      - name: Generate dbt docs
+        working-directory: ./projeto_prod
+        env:
+          GCP_DEV_PROJECT: ${{ secrets.GCP_DEV_PROJECT }}
+          DBT_DEV_SCHEMA: ${{ secrets.DBT_DEV_SCHEMA }}
+          GCP_DEV_KEYFILE_PATH: service-account.json
+        run: dbt docs generate --profiles-dir .
+
+      - name: Upload dbt documentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: dbt-docs
+          path: projeto_prod/target
