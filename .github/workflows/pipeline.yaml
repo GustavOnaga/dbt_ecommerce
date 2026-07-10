@@ -23,21 +23,26 @@ jobs:
           pip install -r requirements.txt
 
       - name: Install dbt packages
-        working-directory: ./projeto_prod  
+        working-directory: ./projeto_prod
         run: dbt deps
+
+      - name: Create Service Account file
+        working-directory: ./projeto_prod
+        run: |
+          echo '${{ secrets.GCP_SERVICE_ACCOUNT }}' > service-account.json
 
       - name: Validate dbt project
         working-directory: ./projeto_prod
         env:
-          GCP_DEV_PROJECT: ${{ vars.GCP_DEV_PROJECT }}
-          DBT_DEV_SCHEMA: ${{ vars.DBT_DEV_SCHEMA }}
-          GCP_DEV_KEYFILE_PATH: ${{ vars.GCP_DEV_KEYFILE_PATH }}
+          GCP_DEV_PROJECT: ${{ secrets.GCP_DEV_PROJECT }}
+          DBT_DEV_SCHEMA: ${{ secrets.DBT_DEV_SCHEMA }}
+          GCP_DEV_KEYFILE_PATH: service-account.json
         run: dbt debug --profiles-dir .
 
       - name: Build dbt project
         working-directory: ./projeto_prod
         env:
-          GCP_DEV_PROJECT: ${{ vars.GCP_DEV_PROJECT }}
-          DBT_DEV_SCHEMA: ${{ vars.DBT_DEV_SCHEMA }}
-          GCP_DEV_KEYFILE_PATH: ${{ vars.GCP_DEV_KEYFILE_PATH }}
+          GCP_DEV_PROJECT: ${{ secrets.GCP_DEV_PROJECT }}
+          DBT_DEV_SCHEMA: ${{ secrets.DBT_DEV_SCHEMA }}
+          GCP_DEV_KEYFILE_PATH: service-account.json
         run: dbt build --profiles-dir .
