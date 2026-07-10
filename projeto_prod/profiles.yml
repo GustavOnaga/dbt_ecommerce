@@ -5,7 +5,7 @@ projeto_prod:
       type: bigquery
       method: service-account
       project: "{{env_var('GCP_DEV_PROJECT')}}"
-      dataset: "{{env_var('DBT_DEV_SCHEMA')}}"
+      schema: "{{env_var('DBT_DEV_SCHEMA')}}"
       threads: 4
       keyfile: "{{env_var('GCP_DEV_KEYFILE_PATH')}}"
 
@@ -14,6 +14,6 @@ projeto_prod:
       type: bigquery
       method: service-account
       project: "{{env_var('GCP_PROD_PROJECT')}}"
-      dataset: "{{env_var('DBT_PROD_SCHEMA')}}"
+      schema: "{{env_var('DBT_PROD_SCHEMA')}}"
       threads: 4
       keyfile: "{{env_var('GCP_PROD_KEYFILE_PATH')}}"
