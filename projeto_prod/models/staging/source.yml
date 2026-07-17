@@ -7,7 +7,7 @@ sources:
     loader: bigquery
 
     tables:
-    - name: stg_avaliacoes
+    - name: avaliacoes
       description: "Tabela de avaliações de produtos"
       columns:
         - name: cliente_id
@@ -29,7 +29,7 @@ sources:
         - name: data_avaliacao
           description: "Data da avaliação"
 
-    - name: stg_carrinho
+    - name: carrinho
       description: "Tabela de carrinho de produtos"
       columns:
           - name: cliente_id
@@ -48,7 +48,7 @@ sources:
           - name: data_adicionado
             description: "Data da adição do produto"
 
-    - name: stg_categorias
+    - name: categorias
       description: "Tabela de categorias de produtos"
       columns:
           - name: id
@@ -60,7 +60,7 @@ sources:
           - name: nome
             description: "Nome da categoria"      
       
-    - name: stg_clientes
+    - name: clientes
       description: "Tabela de clientes"
       columns:
           - name: id
@@ -81,7 +81,7 @@ sources:
           - name: data_registro
             description: "telefone do cliente"  
       
-    - name: stg_itens_pedidos
+    - name: itens_pedidos
       description: "Tabela de itens_pedidos"
       columns:
           - name: pedido_id
@@ -104,7 +104,7 @@ sources:
             description: "subtotal do item do pedido"   
 
       
-    - name: stg_pagamentos
+    - name: pagamentos
       description: "Tabela de pagamentos"
       columns:
           - name: id
@@ -130,7 +130,7 @@ sources:
           - name: data_pagamento
             description: ""   
 
-    - name: stg_pedidos
+    - name: pedidos
       description: "Tabela de pedidos"
       columns:
           - name: id
@@ -155,7 +155,7 @@ sources:
           - name: status
             description: ""   
       
-    - name: stg_produtos
+    - name: produtos
       description: "Tabela de produtos"
       columns:
           - name: id
